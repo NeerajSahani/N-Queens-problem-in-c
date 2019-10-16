@@ -1,73 +1,39 @@
 #include<stdio.h>
 #include<conio.h>
 #include<math.h>
+int x[20];
 
-int queen[]={0 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 , 1, 1, 1, 1, 1, 1, 1, 1};
-
-int verify(int row, int column)
+int place(int k, int i)
 {
-	for(int i=1; i<row; i++)
-	 {
-	 	/*verifying that the position is safe. Ist condition is for column and 2nd is for diagonal*/
-		if(queen[i] == column || (abs(queen[i] - column) == abs(i-row) ) )
-				return 0;
-	 }
-	 return 1;
-}
-
-
-void queenSolution(int number_of_queens)
-{
-	int row=1, flag;
-	while(row <= number_of_queens)
-	 {
-			for(int i=queen[row]; i<=number_of_queens; i++)
-			 {
-				flag = 0;
-				if(verify(row, i))			 // verify the place is safe for queen or not
-				 {
-					queen[row++]=i;	  		//set position and increase row by one
-					flag=1;			 		//set flag to check whether need to backtrack or not
-					break;
-				 } 
-			 }
-			if(!flag)					   //backtracking required
+	for(int j=1; j<k; j++)
+	{
+		if(x[j] == i || abs(x[j]-i) == abs(j-k) )
 			{
-					queen[row]=1;	       //reset current queen's position
-				    queen[--row]++;		   //backtrac to previous queen and increase it's position by one
+				return (0);	
 			}
-	 }		
+	}
+	return 1;
 }
 
-void print(int n)
+void queen(int k, int n)
 {
-	printf("\n\nSolution is...\n\n \t\t ");
-	for(int j=1; j<=n; j++)
-		printf("   %3d   ",j);
-	printf("\n\n");
 	for(int i=1; i<=n; i++)
 	{
-		printf("\t\t%2d",i);
-		for(int j=1; j<=n; j++)
+		if(place(k, i))
 		{
-			if(queen[i] == j)
-				printf("    Q    ");
+			x[k]=i;
+			if(k==n)
+				{
+					for(int z=1; z<=n; z++)
+						printf("%5d", x[i]);
+				}
 			else
-				printf("    -    ");
+				queen(k+1, n);	
 		}
-		printf("\n\n\n");
 	}
 }
-int main()
-{
-	int n;
-	printf("Enter Number of queens :");
-	scanf("%d", &n);
-	queenSolution(n);
-	print(n);
-	printf("\n\n");
-	for(int i=1; i<=n; i++)
-		printf("%4d", queen[i]);
+
+int main(){
+	queen(1, 8);
 	getch();
-	
 }
