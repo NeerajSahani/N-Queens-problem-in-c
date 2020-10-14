@@ -25,7 +25,8 @@ void queen(int k, int n)
 			if(k==n)
 				{
 					for(int z=1; z<=n; z++)
-						printf("%5d", x[i]);
+						printf("%5d", x[z]);
+					printf("\n");
 				}
 			else
 				queen(k+1, n);	
